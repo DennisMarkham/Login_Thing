@@ -30,6 +30,27 @@ password:<br>
 
 
 <script>
+//*** SQL STUFF
+var mysql = require("mysql");
+
+var connection = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+
+  // Your username
+  user: "root",
+
+  // Your password
+  password: "",
+  database: "users_db"
+});
+
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log("connected as id " + connection.threadId);
+  connection.end();
+});
+//*** SQL stuff
 
 	// var pw = $("#psw").val();
 
@@ -44,7 +65,15 @@ password:<br>
 		if (pw.match(".*\\d{2}.*") && pw.match(".*\\w{2}.*") && pw.length > 6)
 		{
 		console.log("Checks out.")
-		//then it sends the username and password to an SQL database.		
+		//then it sends the username and password to an SQL database.	
+
+		//SQL STUFF*********************
+		connection.query("INSERT INTO users_db (username, password) VALUES ('" + un + "', '" + pw + "')" , function(err, res) {
+    if (err) throw err;
+    console.log(res);
+    connection.end();
+  });	
+		//SQL STUFF *************
 		}
 
 
