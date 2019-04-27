@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+form
+{
+	 border-style: solid;
+    padding: 20px;
+   width: 170px;
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+Password must be at least 7 characters long, and include at least 2 numbers and 2 letters
+<form action="">
+Username:<br>
+<input type="text" id = "un" width="90px">
+<br>
+password:<br>
+<input type="password" id = "psw" width="90px">
+<br>
+<br>
+<input type = "button" value = "submit" onclick = "checkPw()">
+</form>
+
+
+<script>
+
+	// var pw = $("#psw").val();
+
+		function checkPw()
+		{
+		pw = $("#psw").val();
+		un = $("#un").val()
+		console.log(pw);
+
+		//currently checks if password has at least 2 digits, 2 letters, and is at least 6 //characters long. Putting bracket thing on end results in an error.  Maybe I should ask 
+		//stack overflow
+		if (pw.match(".*\\d{2}.*") && pw.match(".*\\w{2}.*") && pw.length > 6)
+		{
+		console.log("Checks out.")
+		//then it sends the username and password to an SQL database.		
+		}
+
+
+
+		}
+	
+	// if ($("#psw").val([\d]))
+	// {
+	// 	alert("This has a digit!")
+	// }
+</script>
+</body>
+</html>
