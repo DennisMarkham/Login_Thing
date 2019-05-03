@@ -21,6 +21,38 @@ connection.connect(function(err) {
 
 function start()
 {
+  inquirer
+  .prompt([
+    // Here we create a basic text prompt.
+    {
+       name: "mainMenu",
+      type: "rawlist",
+      message: "Chose an action:",
+      choices: ["Sign Up", "Log In", "List Users"]
+    }
+    ]).then(function(inquirerResponse) {
+if (inquirerResponse.mainMenu == "Sign Up")
+{
+  signUp();
+}
+
+if (inquirerResponse.mainMenu == "List Users")
+{
+  listUsers();
+}
+
+    })
+ 
+}
+
+
+
+
+
+
+
+function signUp()
+{
 inquirer
   .prompt([
     // Here we create a basic text prompt.
@@ -54,4 +86,14 @@ var un = inquirerResponse.username;
       console.log("Password invalid.  Try again.");
     }
   });
+}
+
+
+function listUsers()
+{
+  connection.query("SELECT * FROM people" , function(err, res) {
+    if (err) throw err;
+    console.log(res);
+    connection.end();
+})
 }
