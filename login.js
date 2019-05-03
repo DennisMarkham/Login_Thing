@@ -1,7 +1,13 @@
+//SQL stuff
+var mysql = require("mysql");
+//****
+
 //SERVER STUFF
 
 var http = require("http");
 var fs = require("fs");
+
+
 
 // Set our port to 8080
 var PORT = 8080;
@@ -29,7 +35,7 @@ server.listen(PORT, function() {
 //*****
 
 //*** SQL stuff
-var mysql = require("mysql");
+
 
 var connection = mysql.createConnection({
   host: "localhost",
