@@ -93,7 +93,10 @@ function listUsers()
 {
   connection.query("SELECT * FROM people" , function(err, res) {
     if (err) throw err;
-    console.log(res);
+    for (var i = 0; i < res.length; i++) {
+              console.log(res[i].username);
+            }
+    // console.log(res.username);
     connection.end();
 })
 }
