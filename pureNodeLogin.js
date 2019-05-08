@@ -41,6 +41,10 @@ if (inquirerResponse.mainMenu == "List Users")
   listUsers();
 }
 
+if (inquirerResponse.mainMenu == "Log In")
+{
+  logIn();
+}
     })
  
 }
@@ -78,7 +82,7 @@ var un = inquirerResponse.username;
 
       connection.query("INSERT INTO people (username, password) VALUES ('" + un + "', '" + pw + "')" , function(err, res) {
     if (err) throw err;
-    console.log(res);
+    console.log("Welcome " + un + "!");
     connection.end();
   })
     }
@@ -99,4 +103,46 @@ function listUsers()
     // console.log(res.username);
     connection.end();
 })
+}
+
+function logIn()
+{
+inquirer
+  .prompt([
+    // Here we create a basic text prompt.
+    {
+      type: "input",
+      message: "What is your username?",
+      name: "username"
+    },
+ 
+    // Here we create a basic password-protected text prompt.
+    {
+      type: "password",
+      message: "What is your password",
+      name: "password"
+    }
+  ])
+  .then(function(inquirerResponse) {
+var pw = inquirerResponse.password;
+var un = inquirerResponse.username;
+var valid = false;  
+    connection.query("SELECT * FROM people" , function(err, res) {
+    if (err) throw err;
+    for (var i = 0; i < res.length; i++) {
+              if (res[i].username == un  && res[i].password == pw)
+              {
+                console.log("Welcome back " + res[i].username + "!")
+                valid = true;
+              }
+            }
+    if (valid == false)
+    {
+      console.log("Invalid username or password.")
+    }
+    // console.log(res.username);
+    connection.end();
+})
+
+  });
 }
