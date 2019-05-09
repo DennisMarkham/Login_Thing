@@ -83,7 +83,7 @@ var un = inquirerResponse.username;
       connection.query("INSERT INTO people (username, password) VALUES ('" + un + "', '" + pw + "')" , function(err, res) {
     if (err) throw err;
     console.log("Welcome " + un + "!");
-    connection.end();
+    memberMenu(un);
   })
     }
     else {
@@ -134,6 +134,7 @@ var valid = false;
               {
                 console.log("Welcome back " + res[i].username + "!")
                 valid = true;
+                memberMenu(un);
               }
             }
     if (valid == false)
@@ -145,4 +146,63 @@ var valid = false;
 })
 
   });
+}
+
+function memberMenu(user)
+{
+  var user = user;
+inquirer
+  .prompt([
+    // Here we create a basic text prompt.
+    
+    {
+     name: "mM",
+      type: "rawlist",
+      message: "Main Menu",
+      choices: ["Delete Account", "Logout"]
+    }
+  ])
+  .then(function(inquirerResponse) {
+var answer = inquirerResponse.mM;
+if (answer == "Delete Account")
+{
+deleteAccount(user);
+}
+else
+{
+  connection.end();
+}
+});
+}
+
+function deleteAccount(user)
+{
+  var user = user;
+inquirer
+  .prompt([
+    // Here we create a basic text prompt.
+    
+    {
+     name: "delete",
+      type: "rawlist",
+      message: "Do you want to delete your account",
+      choices: ["No", "Yes"]
+    }
+  ])
+  .then(function(inquirerResponse) {
+var answer = inquirerResponse.delete
+if (answer == "Yes")
+{
+connection.query("DELETE FROM people WHERE username = '" + user + "'", function(err, res) {
+  console.log(res);  
+    connection.end();
+    //cannot quit after invoking quit!? What does that mean.
+})
+}
+else
+{
+  memberMenu();
+}
+
+});
 }
