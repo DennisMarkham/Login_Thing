@@ -78,13 +78,33 @@ var pw = inquirerResponse.password;
 var un = inquirerResponse.username;
     if (pw.match(".*\\d*.*") && pw.match(".*\\w*.*") && pw.length > 6) 
     {
-      console.log("\nWelcome " + un);
-
-      connection.query("INSERT INTO people (username, password) VALUES ('" + un + "', '" + pw + "')" , function(err, res) {
-    if (err) throw err;
+      //***checking if username is taken
+      connection.query("SELECT * FROM people" , function(err, res) {
+      for (var i = 0; i < res.length; i++) {
+              if (res[i].username == un)
+              {
+                console.log("username taken")
+                connection.end();
+              }
+            }
+            connection.query("INSERT INTO people (username, password) VALUES ('" + un + "', '" + pw + "')" , function(err, res) {
+    // if (err) throw err;
+    if (err)
+    {
+      console.log("Goodbye")
+    }
+    else
+    {
     console.log("Welcome " + un + "!");
     memberMenu(un);
+  }
   })
+          });
+      //*** checking if username is taken
+
+      //*** inserting data
+      
+    //*** inserting data
     }
     else {
       console.log("Password invalid.  Try again.");
@@ -142,7 +162,7 @@ var valid = false;
       console.log("Invalid username or password.")
     }
     // console.log(res.username);
-    connection.end();
+    // connection.end();
 })
 
   });
@@ -202,6 +222,7 @@ connection.query("DELETE FROM people WHERE username = '" + user + "'", function(
 else
 {
   memberMenu();
+
 }
 
 });
